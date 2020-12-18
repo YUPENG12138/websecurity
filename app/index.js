@@ -79,14 +79,15 @@ router.post('/register', async (ctx, next) => {
 })
 
 router.get('/comment', async (ctx) => {
+  console.log('ctx.state.user :>> ', ctx.request.query);
   await ctx.render('comment', {
-    hello: 'hello',
+    address: ctx.request.query.address,
   })
 });
 
 router.get('/', async (ctx) => {
   await ctx.render('index', {
-    hello: '<script>alert(1)</script>',
+    hello: '',
   })
 });
 

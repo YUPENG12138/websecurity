@@ -4,16 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <script src="./axios.min.js"></script>
-  <script src="./vue.js"></script>
+  <script src="./views/axios.min.js"></script>
+  <script src="./views/vue.js"></script>
 </head>
 
 <body>
   <div id="app">
-    <div >{{name}}</div>
-    <input type="text">
+    <div >欢迎来自{{{address}}}的用户</div>
+    <input type="text" v-model="value">
     <button v-on:click="comment">评论</button>
-
     </div>
     <div>
       <button onclick="document.getElementById('log').innerHTML = ''">清除log</button>
@@ -33,15 +32,12 @@
     var app = new Vue({
       el: '#app',
       data: {
-        name: '',
-      },
-      mounted () {
-        this.name = location.search.split('=')[1];
+        value: '',
       },
       methods: {
         async comment() {
           await axios.post('/api/comment', {
-
+            value: this.value,
           });
         }
       }
