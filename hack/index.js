@@ -11,7 +11,7 @@ const app = new Koa();
 app.use(static(__dirname + '/'));
 
 app.use(async (ctx, next) => {
-  log('cookie', ctx.request.query);
+  log('cookie' + ctx.request.query.cookie);
   await next();
 });
 
