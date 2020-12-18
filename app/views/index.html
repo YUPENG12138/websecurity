@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./views/axios.min.js"></script>
+  <script src="./views/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    {{{hello}}}
+    <div>
+      <input v-model="username">
+      <input v-model="password">
+    </div>
+    <div>
+      <button v-on:click="login">登陆</button>
+      <button v-on:click="register">注册</button>
+    </div>
+    <div>
+      <button onclick="document.getElementById('log').innerHTML = ''">清除log</button>
+    </div>
+  </div>
+  <div id="log"></div>
+  </div>
+  <script>
+    axios.interceptors.response.use(
+      response => {
+        var element = document.createElement("p");
+        element.innerHTML = JSON.stringify(response.data)
+        document.getElementById('log').appendChild(element)
+        return response;
+      }
+    );
+    var app = new Vue({
+      el: '#app',
+      data: {
+        username: '',
+        password: ''
+      },
+      methods: {
+        async login() {
+          await axios.post('/login', {
+            username: this.username,
+            password: this.password
+          })
+        },
+        async register() {
+          await axios.post('/register', {
+            username: this.username,
+            password: this.password
+          })
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

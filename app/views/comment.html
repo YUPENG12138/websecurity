@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./axios.min.js"></script>
+  <script src="./vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div >{{name}}</div>
+    <input type="text">
+    <button v-on:click="comment">评论</button>
+
+    </div>
+    <div>
+      <button onclick="document.getElementById('log').innerHTML = ''">清除log</button>
+    </div>
+  </div>
+  <div id="log"></div>
+  </div>
+  <script>
+    axios.interceptors.response.use(
+      response => {
+        var element = document.createElement("p");
+        element.innerHTML = JSON.stringify(response.data)
+        document.getElementById('log').appendChild(element)
+        return response;
+      }
+    );
+    var app = new Vue({
+      el: '#app',
+      data: {
+        name: '',
+      },
+      mounted () {
+        this.name = location.search.split('=')[1];
+      },
+      methods: {
+        async comment() {
+          await axios.post('/api/comment', {
+
+          });
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
